@@ -26,8 +26,15 @@ class CheesesController < ApplicationController
     # }
 
     # Add summary Model method.
-    render json: cheese, except: [:created_at, :updated_at], methods: [:summary]
+    # render json: cheese, except: [:created_at, :updated_at], methods: [:summary]
 
+    # Error handling
+    if cheese
+      render json: cheese, except: [:created_at, :updated_at], methods: [:summary]
+    else
+      # status: :not_found will produce a 404 status code
+      render json: { error: 'Cheese not found' }, status: :not_found
+    end
   end
 
 end
